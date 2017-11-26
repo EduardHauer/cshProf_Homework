@@ -1,0 +1,33 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF"
+        xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="WPF.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="919.5">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="430"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <ListView x:Name="departmentList" HorizontalAlignment="Left" Height="200" VerticalAlignment="Top" Width="200" Margin="10,41,0,0" SelectionChanged="Department_SelectionChanged">
+            <System:String>null</System:String>
+        </ListView>
+        <ListView x:Name="employeeList" HorizontalAlignment="Left" Height="200" VerticalAlignment="Top" Width="200" Margin="215,41,0,0" SelectionChanged="Employee_SelectionChanged">
+            <System:String>null</System:String>
+        </ListView>
+        <Label x:Name="type" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="10,10,0,0" Width="462"/>
+        <TextBox x:Name="name" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top" Width="120" Grid.Column="1" Margin="10,41,0,0" IsEnabled="False"/>
+        <TextBox x:Name="age" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Age" VerticalAlignment="Top" Width="75" Grid.Column="1" Margin="135,41,0,0" IsEnabled="False"/>
+        <TextBox x:Name="salary" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Salary" VerticalAlignment="Top" Width="120" Grid.Column="1" Margin="215,41,0,0" IsEnabled="False"/>
+        <ComboBox x:Name="department" HorizontalAlignment="Left" VerticalAlignment="Top" Width="132" Grid.Column="1" Margin="340,42,0,0" SelectedIndex="0" IsEnabled="False">
+            <System:String>null</System:String>
+        </ComboBox>
+        <Button x:Name="add" Content="ADD" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Grid.Column="1" Margin="10,69,0,0" IsEnabled="False" Click="add_Click"/>
+        <Button x:Name="edit" Content="EDIT" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Grid.Column="1" Margin="90,69,0,0" IsEnabled="False"/>
+        <Label x:Name="d" Content="Department" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Width="200"/>
+        <Label x:Name="e" Content="Employee" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="215,11,0,0" Width="200"/>
+    </Grid>
+</Window>

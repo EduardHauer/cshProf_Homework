@@ -1,0 +1,9 @@
+﻿CREATE TABLE[dbo].[Employee]
+(
+	[Id] INT IDENTITY(1, 1) NOT NULL,
+	[Name] NVARCHAR(MAX) COLLATE Cyrillic_General_CI_AS NOT NULL,
+	[Age] INT NOT NULL,
+	[Salary] FLOAT NOT NULL,
+	[DepartmentId] INT NOT NULL,
+	CONSTRAINT[PK_dbo.Employee] PRIMARY KEY CLUSTERED([Id] ASC)
+);
