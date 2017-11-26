@@ -33,13 +33,47 @@ namespace WPF
         {
             InitializeComponent();
 
-            Update(-1);
+            Update(-1, true);
         }
 
-        void Update(int selectedIndex)
+        void Update(int selectedIndex, bool start)
         {
-            
-            if (t)
+            if (start)
+            {
+                string sqlExpression2 = @"SELECT * FROM Employee";
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(sqlExpression2, connection);
+                    SqlDataReader reader = command.ExecuteReader(CommandBehavior.CloseConnection);
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            employeeList.Items.Add(reader.GetString(1));
+                        }
+                    }
+                }
+
+                string sqlExpression = @"SELECT * FROM Department";
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(sqlExpression, connection);
+                    SqlDataReader reader = command.ExecuteReader(CommandBehavior.CloseConnection);
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            departmentList.Items.Add(reader.GetString(1));
+                            department.Items.Add(reader.GetString(1));
+                        }
+                    }
+                }
+            }
+            else if (t)
             {
                 type.Content = "Employee";
                 name.IsEnabled = true;
@@ -47,6 +81,26 @@ namespace WPF
                 salary.IsEnabled = t;
                 department.IsEnabled = t;
                 add.IsEnabled = true;
+
+                employeeList.SelectedIndex = -1;
+                employeeList.Items.Clear();
+                employeeList.Items.Add("null");
+
+                string sqlExpression2 = @"SELECT * FROM Employee";
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(sqlExpression2, connection);
+                    SqlDataReader reader = command.ExecuteReader(CommandBehavior.CloseConnection);
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            employeeList.Items.Add(reader.GetString(1));
+                        }
+                    }
+                }
             }
             else
             {
@@ -56,66 +110,44 @@ namespace WPF
                 salary.IsEnabled = t;
                 department.IsEnabled = t;
                 add.IsEnabled = true;
+
+                departmentList.SelectedIndex = -1;
+                departmentList.Items.Clear();
+                departmentList.Items.Add("null");
+
+                string sqlExpression = @"SELECT * FROM Department";
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(sqlExpression, connection);
+                    SqlDataReader reader = command.ExecuteReader(CommandBehavior.CloseConnection);
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            departmentList.Items.Add(reader.GetString(1));
+                            department.Items.Add(reader.GetString(1));
+                        }
+                    }
+                }
             }
-            if (selectedIndex > 0) edit.IsEnabled = true;
+            if (selectedIndex > 0) edit.IsEnabled = false;
             else edit.IsEnabled = false;
-
-            departmentList.SelectedIndex = -1;
-            departmentList.Items.Clear();
-            departmentList.Items.Add("null");
-            
-            string sqlExpression = @"SELECT * FROM Department";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand(sqlExpression, connection);
-                SqlDataReader reader = command.ExecuteReader(CommandBehavior.CloseConnection);
-
-                if(reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        departmentList.Items.Add(reader.GetString(1));
-                    }
-                }
-            }
-
-
-            employeeList.SelectedIndex = -1;
-            employeeList.Items.Clear();
-            employeeList.Items.Add("null");
-
-            string sqlExpression2 = @"SELECT * FROM Employee";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand(sqlExpression2, connection);
-                SqlDataReader reader = command.ExecuteReader(CommandBehavior.CloseConnection);
-
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        employeeList.Items.Add(reader.GetString(1));
-                    }
-                }
-            }
-
-            
         }
 
         private void Employee_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             departmentList.SelectedIndex = -1;
             t = true;
-            Update((sender as ListView).SelectedIndex);
+            Update((sender as ListView).SelectedIndex, false);
         }
 
         private void Department_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             employeeList.SelectedIndex = -1;
             t = false;
-            Update((sender as ListView).SelectedIndex);
+            Update((sender as ListView).SelectedIndex, false);
         }
 
         private void add_Click(object sender, RoutedEventArgs e)
